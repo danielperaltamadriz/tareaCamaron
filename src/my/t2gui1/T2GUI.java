@@ -539,7 +539,12 @@ public class T2GUI extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("jButton4");
+        jButton4.setText("Modificar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -644,7 +649,12 @@ public class T2GUI extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Modificar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -813,11 +823,11 @@ public class T2GUI extends javax.swing.JFrame {
                                     .addComponent(jLabel16))
                                 .addGap(130, 130, 130)
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(color)
+                                    .addComponent(color, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                                     .addComponent(weight)))))
                     .addComponent(jumboHistoria)
                     .addComponent(pinkyHistoria))
-                .addContainerGap(262, Short.MAX_VALUE))
+                .addContainerGap(285, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -880,19 +890,20 @@ public class T2GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void calcularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularBtnActionPerformed
-        
+        d = new Descuentos();
         d.descuento_pinky(Double.parseDouble(pinkyText.getText()));
         d.descuento_blanco(Double.parseDouble(blancoText.getText()));
         d.descuento_jumbo(Double.parseDouble(jumboText.getText()));
-        Cliente cliente = new Cliente(nombreText.getText(), cedulaText.getText(), d);
+        cliente = new Cliente(nombreText.getText(), cedulaText.getText(), d);
         conDescuentoText.setText(String.valueOf(cliente.getCompra().getPrecioConDescuento()));
         sinDescuentoText.setText(String.valueOf(cliente.getCompra().getPrecioSinDescuento()));
         listaClientes.add(cliente);
     }//GEN-LAST:event_calcularBtnActionPerformed
 
     private void pinkyTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyTextKeyReleased
-         if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            pinkyText.setText(pinkyText.getText().replace(evt.getKeyChar(),'\0'));
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            pinkyText.setText(pinkyText.getText().replace(evt.getKeyChar(), '\0'));
+        }
     }//GEN-LAST:event_pinkyTextKeyReleased
 
     private void nombreTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreTextKeyReleased
@@ -904,13 +915,15 @@ public class T2GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_cedulaTextKeyReleased
 
     private void blancoTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoTextKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            blancoText.setText(blancoText.getText().replace(evt.getKeyChar(),'\0'));
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            blancoText.setText(blancoText.getText().replace(evt.getKeyChar(), '\0'));
+        }
     }//GEN-LAST:event_blancoTextKeyReleased
 
     private void jumboTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboTextKeyReleased
-       if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            jumboText.setText(jumboText.getText().replace(evt.getKeyChar(),'\0'));
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            jumboText.setText(jumboText.getText().replace(evt.getKeyChar(), '\0'));
+        }
     }//GEN-LAST:event_jumboTextKeyReleased
 
     private void registroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroBtnActionPerformed
@@ -921,7 +934,7 @@ public class T2GUI extends javax.swing.JFrame {
             resultado += " Pinky:" + listaClientes.get(i).getCompra().getPinky().getKilos();
             resultado += " Blanco:" + listaClientes.get(i).getCompra().getBlanco().getKilos();
             resultado += " Jumbo:" + listaClientes.get(i).getCompra().getJumbo().getKilos();
-            resultado += " Venta en Colones:" + listaClientes.get(i).getCompra().getPrecioConDescuento();   
+            resultado += " Venta en Colones:" + listaClientes.get(i).getCompra().getPrecioConDescuento();
             resultado += "\n";
         }
         resultadoText.setText(resultado);
@@ -932,20 +945,23 @@ public class T2GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_limpiarBtnActionPerformed
 
     private void blancoTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoTextKeyTyped
-        if (blancoText.getText().isEmpty())
+        if (blancoText.getText().isEmpty()) {
             blancoText.setText("0");
-        
+        }
+
     }//GEN-LAST:event_blancoTextKeyTyped
 
     private void pinkyTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyTextKeyTyped
-        if (pinkyText.getText().isEmpty())
+        if (pinkyText.getText().isEmpty()) {
             pinkyText.setText("0");
-        
+        }
+
     }//GEN-LAST:event_pinkyTextKeyTyped
 
     private void jumboTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboTextKeyTyped
-        if (jumboText.getText().isEmpty()) 
-            jumboText.setText("0");              
+        if (jumboText.getText().isEmpty()) {
+            jumboText.setText("0");
+        }
     }//GEN-LAST:event_jumboTextKeyTyped
 
     private void pinkyHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pinkyHistoriaActionPerformed
@@ -954,7 +970,7 @@ public class T2GUI extends javax.swing.JFrame {
         size.setText(d.getPinky().getSize());
         color.setText(d.getPinky().getColor());
         weight.setText(d.getPinky().getWeight());
-        
+
     }//GEN-LAST:event_pinkyHistoriaActionPerformed
 
     private void blancoHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blancoHistoriaActionPerformed
@@ -974,7 +990,7 @@ public class T2GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_colorActionPerformed
 
     private void jumboHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jumboHistoriaActionPerformed
-       name.setText(d.getJumbo().getName());
+        name.setText(d.getJumbo().getName());
         scientificName.setText(d.getJumbo().getScientificName());
         size.setText(d.getJumbo().getSize());
         color.setText(d.getJumbo().getColor());
@@ -982,145 +998,210 @@ public class T2GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jumboHistoriaActionPerformed
 
     private void pinkyPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyPrecioKeyReleased
-    if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            pinkyPrecio.setText(pinkyPrecio.getText().replace("" + evt.getKeyChar(),""));
-    d.getPinky().setPrecio(5840);
-   
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            pinkyPrecio.setText(pinkyPrecio.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        d.getPinky().setPrecio(5840);
+
     }//GEN-LAST:event_pinkyPrecioKeyReleased
 
     private void pinkyLimiteAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyLimiteAKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            pinkyLimiteA.setText(pinkyLimiteA.getText().replace("" + evt.getKeyChar(),""));
-d.getPinky().setLimiteA(5);
-  
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            pinkyLimiteA.setText(pinkyLimiteA.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        d.getPinky().setLimiteA(5);
+
     }//GEN-LAST:event_pinkyLimiteAKeyReleased
 
     private void pinkyDescBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyDescBKeyReleased
-         if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            pinkyDescB.setText(pinkyDescB.getText().replace("" + evt.getKeyChar(),""));
-         if(pinkyDescB.getText().length()-1 < pinkyDescB.getText().replace(".", "").length() && evt.getKeyCode() == 46)
-             if(pinkyDescB.getText().replace(".", "").length() > 0)
-            pinkyDescB.setText(pinkyDescB.getText()+ ".");
-  
-         
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            pinkyDescB.setText(pinkyDescB.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        if (pinkyDescB.getText().length() - 1 < pinkyDescB.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
+            if (pinkyDescB.getText().replace(".", "").length() > 0) {
+                pinkyDescB.setText(pinkyDescB.getText() + ".");
+            }
+        }
+
+
     }//GEN-LAST:event_pinkyDescBKeyReleased
 
     private void pinkyLimiteBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyLimiteBKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            pinkyLimiteB.setText(pinkyLimiteB.getText().replace("" + evt.getKeyChar(),""));
-d.getPinky().setLimiteB(10);
-  
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            pinkyLimiteB.setText(pinkyLimiteB.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        d.getPinky().setLimiteB(10);
+
     }//GEN-LAST:event_pinkyLimiteBKeyReleased
 
     private void pinkyDescAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyDescAKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)     
-            pinkyDescA.setText(pinkyDescA.getText().replace("" + evt.getKeyChar(),""));
- if(pinkyDescA.getText().length()-1 < pinkyDescA.getText().replace(".", "").length() && evt.getKeyCode() == 46)
-     if(pinkyDescA.getText().replace(".", "").length() > 0)
-            pinkyDescA.setText(pinkyDescA.getText()+ ".");
-d.getPinky().setDescA(1.05);
- 
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            pinkyDescA.setText(pinkyDescA.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        if (pinkyDescA.getText().length() - 1 < pinkyDescA.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
+            if (pinkyDescA.getText().replace(".", "").length() > 0) {
+                pinkyDescA.setText(pinkyDescA.getText() + ".");
+            }
+        }
+        d.getPinky().setDescA(1.05);
+
     }//GEN-LAST:event_pinkyDescAKeyReleased
 
     private void jumboPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboPrecioKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            jumboPrecio.setText(jumboPrecio.getText().replace("" + evt.getKeyChar(),""));
- d.getJumbo().setPrecio(23200);
-  
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            jumboPrecio.setText(jumboPrecio.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        d.getJumbo().setPrecio(23200);
+
     }//GEN-LAST:event_jumboPrecioKeyReleased
 
     private void jumboLimiteAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboLimiteAKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            jumboLimiteA.setText(jumboLimiteA.getText().replace("" + evt.getKeyChar(),""));
-d.getJumbo().setLimiteB(5);
-  
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            jumboLimiteA.setText(jumboLimiteA.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        d.getJumbo().setLimiteB(4);
+
     }//GEN-LAST:event_jumboLimiteAKeyReleased
 
     private void jumboDescBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboDescBKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)    
-            jumboDescB.setText(jumboDescB.getText().replace("" + evt.getKeyChar(),""));
- if(jumboDescB.getText().length()-1 < jumboDescB.getText().replace(".", "").length() && evt.getKeyCode() == 46)
-      if(jumboDescB.getText().replace(".", "").length() > 0)
-            jumboDescB.setText(jumboDescB.getText()+ ".");
-d.getJumbo().setDescB(1.07);
-   
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            jumboDescB.setText(jumboDescB.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        if (jumboDescB.getText().length() - 1 < jumboDescB.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
+            if (jumboDescB.getText().replace(".", "").length() > 0) {
+                jumboDescB.setText(jumboDescB.getText() + ".");
+            }
+        }
+        d.getJumbo().setDescB(1.07);
+
     }//GEN-LAST:event_jumboDescBKeyReleased
 
     private void jumboLimiteBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboLimiteBKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            jumboLimiteB.setText(jumboLimiteB.getText().replace("" + evt.getKeyChar(),""));
-d.getJumbo().setLimiteB(10);
-   
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            jumboLimiteB.setText(jumboLimiteB.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        d.getJumbo().setLimiteB(7);
+
     }//GEN-LAST:event_jumboLimiteBKeyReleased
 
     private void jumboDescAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboDescAKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-                 jumboDescA.setText(jumboDescA.getText().replace("" + evt.getKeyChar(),""));
- if(jumboDescA.getText().length()-1 < jumboDescA.getText().replace(".", "").length() && evt.getKeyCode() == 46)
-       if(jumboDescA.getText().replace(".", "").length() > 0)
-            jumboDescA.setText(jumboDescA.getText()+ ".");
-d.getJumbo().setDescA(1.04);
-   
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            jumboDescA.setText(jumboDescA.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        if (jumboDescA.getText().length() - 1 < jumboDescA.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
+            if (jumboDescA.getText().replace(".", "").length() > 0) {
+                jumboDescA.setText(jumboDescA.getText() + ".");
+            }
+        }
+        d.getJumbo().setDescA(1.04);
+
     }//GEN-LAST:event_jumboDescAKeyReleased
 
     private void blancoPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoPrecioKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            blancoPrecio.setText(blancoPrecio.getText().replace("" + evt.getKeyChar(),""));
-    d.getBlanco().setPrecio(10045);
-    if(!blancoPrecio.getText().isEmpty() && Integer.getInteger(blancoPrecio.getText()) > 0){
-        d.getBlanco().setPrecio(Integer.getInteger(blancoPrecio.getText()));
-    }
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            blancoPrecio.setText(blancoPrecio.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        d.getBlanco().setPrecio(10045);       
     }//GEN-LAST:event_blancoPrecioKeyReleased
 
     private void blancoLimiteAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoLimiteAKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            blancoLimiteA.setText(blancoLimiteA.getText().replace("" + evt.getKeyChar(),""));
-d.getBlanco().setLimiteA(5);
-  
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            blancoLimiteA.setText(blancoLimiteA.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        d.getBlanco().setLimiteA(7);
+
     }//GEN-LAST:event_blancoLimiteAKeyReleased
 
     private void blancoDescBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoDescBKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            blancoDescB.setText(blancoDescB.getText().replace("" + evt.getKeyChar(),""));
- if(blancoDescB.getText().length()-1 < blancoDescB.getText().replace(".", "").length() && evt.getKeyCode() == 46)
-       if(blancoDescB.getText().replace(".", "").length() > 0)
-            blancoDescB.setText(blancoDescB.getText()+ ".");
-d.getBlanco().setDescB(1.15);
-   
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            blancoDescB.setText(blancoDescB.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        if (blancoDescB.getText().length() - 1 < blancoDescB.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
+            if (blancoDescB.getText().replace(".", "").length() > 0) {
+                blancoDescB.setText(blancoDescB.getText() + ".");
+            }
+        }
+        d.getBlanco().setDescB(1.15);
+
     }//GEN-LAST:event_blancoDescBKeyReleased
 
     private void blancoLimiteBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoLimiteBKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            blancoLimiteB.setText(blancoLimiteB.getText().replace("" + evt.getKeyChar(),""));
-d.getBlanco().setLimiteB(10);
-  
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            blancoLimiteB.setText(blancoLimiteB.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        d.getBlanco().setLimiteB(15);
+
     }//GEN-LAST:event_blancoLimiteBKeyReleased
 
     private void blancoDescAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoDescAKeyReleased
- if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57)
-            blancoDescA.setText(blancoDescA.getText().replace("" + evt.getKeyChar(),""));
-  if(blancoDescA.getText().length()-1 < blancoDescA.getText().replace(".", "").length() && evt.getKeyCode() == 46)
-       if(blancoDescA.getText().replace(".", "").length() > 0)
-            blancoDescA.setText(blancoDescA.getText()+ ".");
-d.getBlanco().setDescA(1.07);
-   
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            blancoDescA.setText(blancoDescA.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        if (blancoDescA.getText().length() - 1 < blancoDescA.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
+            if (blancoDescA.getText().replace(".", "").length() > 0) {
+                blancoDescA.setText(blancoDescA.getText() + ".");
+            }
+        }
+        d.getBlanco().setDescA(1.07);
+
     }//GEN-LAST:event_blancoDescAKeyReleased
 
     private void pinkyPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pinkyPrecioActionPerformed
-       
-    }//GEN-LAST:event_pinkyPrecioActionPerformed
 
+    }//GEN-LAST:event_pinkyPrecioActionPerformed
     private void modPinkyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modPinkyActionPerformed
-       if(pinkyPrecio.getText().length() > 0){
-           System.out.println(pinkyPrecio.getText());
-           if(Integer.getInteger("0") > 0){}
-          //      d.getPinky().setPrecio(Integer.getInteger(pinkyPrecio.getText()));       
-       }
-       System.out.println(String.valueOf(pinkyLimiteA.getText().length()));
-       System.out.println(String.valueOf(pinkyLimiteB.getText().length()));
-       System.out.println(String.valueOf(pinkyDescA.getText().length()));
-       System.out.println(String.valueOf(pinkyDescB.getText().length()));
+        if (pinkyPrecio.getText().length() > 0) {
+            d.getPinky().setPrecio(Integer.parseInt(pinkyPrecio.getText()));
+        }
+        if (pinkyLimiteA.getText().length() > 0) {
+            d.getPinky().setLimiteA(Integer.parseInt(pinkyLimiteA.getText()));
+        }
+        if (pinkyLimiteB.getText().length() > 0) {
+            d.getPinky().setLimiteB(Integer.parseInt(pinkyLimiteB.getText()));
+        }
+        if (pinkyDescA.getText().length() > 0) {
+            d.getPinky().setDescA(Integer.parseInt(pinkyDescA.getText()));
+        }
+        if (pinkyDescB.getText().length() > 0) {
+            d.getPinky().setDescB(Integer.parseInt(pinkyDescB.getText()));
+        }
     }//GEN-LAST:event_modPinkyActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (blancoPrecio.getText().length() > 0) {
+            d.getBlanco().setPrecio(Integer.parseInt(blancoPrecio.getText()));
+        }
+        if (blancoLimiteA.getText().length() > 0) {
+            d.getBlanco().setLimiteA(Integer.parseInt(blancoLimiteA.getText()));
+        }
+        if (blancoLimiteB.getText().length() > 0) {
+            d.getBlanco().setLimiteB(Integer.parseInt(blancoLimiteB.getText()));
+        }
+        if (blancoDescA.getText().length() > 0) {
+            d.getBlanco().setDescA(Integer.parseInt(blancoDescA.getText()));
+        }
+        if (blancoDescB.getText().length() > 0) {
+            d.getBlanco().setDescB(Integer.parseInt(blancoDescB.getText()));
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if (jumboPrecio.getText().length() > 0) {
+            d.getJumbo().setPrecio(Integer.parseInt(jumboPrecio.getText()));
+        }
+        if (jumboLimiteA.getText().length() > 0) {
+            d.getJumbo().setLimiteA(Integer.parseInt(jumboLimiteA.getText()));
+        }
+        if (jumboLimiteB.getText().length() > 0) {
+            d.getJumbo().setLimiteB(Integer.parseInt(jumboLimiteB.getText()));
+        }
+        if (jumboDescA.getText().length() > 0) {
+            d.getJumbo().setDescA(Integer.parseInt(jumboDescA.getText()));
+        }
+        if (jumboDescB.getText().length() > 0) {
+            d.getJumbo().setDescB(Integer.parseInt(jumboDescB.getText()));
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private void limpiarEspacios() {
         nombreText.setText("");
@@ -1138,7 +1219,7 @@ d.getBlanco().setDescA(1.07);
         calcularBtn.setEnabled(calcularBtn.isEnabled() && enabled);
     }
 
-    public static void main(String args[]) {        
+    public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new T2GUI().setVisible(true);
@@ -1146,7 +1227,8 @@ d.getBlanco().setDescA(1.07);
         });
     }
     private LinkedList<Cliente> listaClientes = new LinkedList<>();
-    Descuentos d = new Descuentos();
+    Cliente cliente;
+    Descuentos d;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField blancoDescA;
     private javax.swing.JTextField blancoDescB;

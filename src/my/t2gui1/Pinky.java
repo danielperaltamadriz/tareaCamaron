@@ -31,7 +31,7 @@ public class Pinky  extends Camaron{
     
      @Override
     public String getWeight(){
-    return "2 g - 4 g";
+    return "2g - 4g";
     }
          
 }

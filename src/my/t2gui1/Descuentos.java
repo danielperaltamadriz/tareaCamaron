@@ -15,7 +15,7 @@ public class Descuentos {
 {
     pinky = new Pinky();
     blanco = new Blanco();
-    jumbo = new Jumbo ();  
+    jumbo = new Jumbo();  
     
     pinky.setPrecio(5840);
     pinky.setLimiteA(5);
@@ -24,14 +24,14 @@ public class Descuentos {
     pinky.setDescB(1.1);
         
     blanco.setPrecio(10045);
-    blanco.setLimiteA(5);
-    blanco.setLimiteB(10);
+    blanco.setLimiteA(7);
+    blanco.setLimiteB(15);
     blanco.setDescA(1.07);
     blanco.setDescB(1.15);
         
     jumbo.setPrecio(23200);
-    jumbo.setLimiteA(5);
-    jumbo.setLimiteB(10);
+    jumbo.setLimiteA(4);
+    jumbo.setLimiteB(7);
     jumbo.setDescA(1.04);
     jumbo.setDescB(1.07);
 }        
@@ -41,11 +41,11 @@ public class Descuentos {
         pinky.setKilos(kilos);
         if (kilos>=pinky.getLimiteA() && kilos<pinky.getLimiteB())
         {
-            preciopinky=(preciopinky/pinky.getDescA());
+            preciopinky=(preciopinky* ((100 - pinky.getDescA())/100));
         }
         else if (kilos >= pinky.getLimiteB())
         {
-            preciopinky=(preciopinky/pinky.getDescB());
+            preciopinky=(preciopinky* ((100 - pinky.getDescB())/100));
         }
             return preciopinky;
     }
@@ -56,11 +56,11 @@ public class Descuentos {
         blanco.setKilos(kilos);
         if (kilos>=blanco.getLimiteA() && kilos<blanco.getLimiteB())
         {
-            precioblanco=((precioblanco)/blanco.getDescA());
+          precioblanco=(precioblanco* ((100 - blanco.getDescA())/100));
         }
         else if (kilos >= blanco.getLimiteB())
         {
-            precioblanco=((precioblanco)/blanco.getDescB());
+            precioblanco=(precioblanco* ((100 - blanco.getDescB())/100));
         }
         return precioblanco;
     }
@@ -69,13 +69,11 @@ public class Descuentos {
     {
         preciojumbo = kilos * jumbo.getPrecio();
         jumbo.setKilos(kilos);
-        if (kilos>=jumbo.getLimiteA() && kilos<jumbo.getLimiteB())
-        {
-            preciojumbo=(preciojumbo/jumbo.getDescA());
+        if (kilos>=jumbo.getLimiteA() && kilos<jumbo.getLimiteB()){           
+            preciojumbo=(preciojumbo* ((100 - jumbo.getDescA())/100));
         }
-        else if (kilos >= jumbo.getLimiteB())
-        {
-            preciojumbo=(preciojumbo/jumbo.getDescB());
+        else if (kilos >= jumbo.getLimiteB()){
+            preciojumbo=(preciojumbo* ((100 - jumbo.getDescB())/100));
         }
         return preciojumbo;  
     }    
