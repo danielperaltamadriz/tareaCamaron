@@ -2,12 +2,12 @@ package my.t2gui1;
 
 public class Camaron {
     protected String tipo;
-    protected static int precio;
-    protected static int limiteA;
-    protected static int limiteB;
+    protected  int precio;
+    protected  int limiteA;
+    protected  int limiteB;
     protected double kilos;
-    protected static double descA;
-    protected static double descB;
+    protected  double descA;
+    protected  double descB;
     protected String name;
     protected String scientificName;
     protected String size;

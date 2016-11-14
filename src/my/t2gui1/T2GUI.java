@@ -1,6 +1,7 @@
 package my.t2gui1;
 
 import java.util.LinkedList;
+import java.util.Vector;
 
 public class T2GUI extends javax.swing.JFrame {
 
@@ -890,7 +891,35 @@ public class T2GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void calcularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularBtnActionPerformed
+        if (precios.size() == 0) {
+            precios.add(5840);
+            precios.add(10045);
+            precios.add(23200);
+        }
+        if (limitesA.size() == 0) {
+            limitesA.add(5);
+            limitesA.add(5);
+            limitesA.add(5);
+        }
+        if (limitesB.size() == 0) {
+            limitesB.add(10);
+            limitesB.add(10);
+            limitesB.add(10);
+        }
+        if (descsA.size() == 0) {
+            descsA.add(5.0);
+            descsA.add(7.0);
+            descsA.add(4.0);
+        }
+        if (descsB.size() == 0) {
+            descsB.add(10.0);
+            descsB.add(5.0);
+            descsB.add(7.0);
+        }
         d = new Descuentos();
+        d.setPinky(precios.get(0), limitesA.get(0), limitesB.get(0), descsA.get(0), descsB.get(0));
+        d.setBlanco(precios.get(1), limitesA.get(1), limitesB.get(1), descsA.get(1), descsB.get(1));
+        d.setJumbo(precios.get(2), limitesA.get(2), limitesB.get(2), descsA.get(2), descsB.get(2));
         d.descuento_pinky(Double.parseDouble(pinkyText.getText()));
         d.descuento_blanco(Double.parseDouble(blancoText.getText()));
         d.descuento_jumbo(Double.parseDouble(jumboText.getText()));
@@ -1002,14 +1031,14 @@ public class T2GUI extends javax.swing.JFrame {
             pinkyPrecio.setText(pinkyPrecio.getText().replace("" + evt.getKeyChar(), ""));
         }
         d.getPinky().setPrecio(5840);
-
+        precios.set(0, 5840);
     }//GEN-LAST:event_pinkyPrecioKeyReleased
 
     private void pinkyLimiteAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyLimiteAKeyReleased
         if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
             pinkyLimiteA.setText(pinkyLimiteA.getText().replace("" + evt.getKeyChar(), ""));
         }
-        d.getPinky().setLimiteA(5);
+        limitesA.set(0, 5);
 
     }//GEN-LAST:event_pinkyLimiteAKeyReleased
 
@@ -1022,15 +1051,14 @@ public class T2GUI extends javax.swing.JFrame {
                 pinkyDescB.setText(pinkyDescB.getText() + ".");
             }
         }
-
-
+        descsB.set(0, 1.00);
     }//GEN-LAST:event_pinkyDescBKeyReleased
 
     private void pinkyLimiteBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyLimiteBKeyReleased
         if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
             pinkyLimiteB.setText(pinkyLimiteB.getText().replace("" + evt.getKeyChar(), ""));
         }
-        d.getPinky().setLimiteB(10);
+        limitesA.set(0, 10);
 
     }//GEN-LAST:event_pinkyLimiteBKeyReleased
 
@@ -1043,7 +1071,7 @@ public class T2GUI extends javax.swing.JFrame {
                 pinkyDescA.setText(pinkyDescA.getText() + ".");
             }
         }
-        d.getPinky().setDescA(1.05);
+        descsA.set(0, 5.0);
 
     }//GEN-LAST:event_pinkyDescAKeyReleased
 
@@ -1051,15 +1079,14 @@ public class T2GUI extends javax.swing.JFrame {
         if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
             jumboPrecio.setText(jumboPrecio.getText().replace("" + evt.getKeyChar(), ""));
         }
-        d.getJumbo().setPrecio(23200);
-
+        precios.set(2, 23200);
     }//GEN-LAST:event_jumboPrecioKeyReleased
 
     private void jumboLimiteAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboLimiteAKeyReleased
         if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
             jumboLimiteA.setText(jumboLimiteA.getText().replace("" + evt.getKeyChar(), ""));
         }
-        d.getJumbo().setLimiteB(4);
+        limitesA.set(2, 5);
 
     }//GEN-LAST:event_jumboLimiteAKeyReleased
 
@@ -1072,15 +1099,14 @@ public class T2GUI extends javax.swing.JFrame {
                 jumboDescB.setText(jumboDescB.getText() + ".");
             }
         }
-        d.getJumbo().setDescB(1.07);
-
+        descsB.set(2, 7.0);
     }//GEN-LAST:event_jumboDescBKeyReleased
 
     private void jumboLimiteBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboLimiteBKeyReleased
         if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
             jumboLimiteB.setText(jumboLimiteB.getText().replace("" + evt.getKeyChar(), ""));
         }
-        d.getJumbo().setLimiteB(7);
+        limitesB.set(2, 10);
 
     }//GEN-LAST:event_jumboLimiteBKeyReleased
 
@@ -1093,22 +1119,21 @@ public class T2GUI extends javax.swing.JFrame {
                 jumboDescA.setText(jumboDescA.getText() + ".");
             }
         }
-        d.getJumbo().setDescA(1.04);
-
+        descsA.set(2, 4.0);
     }//GEN-LAST:event_jumboDescAKeyReleased
 
     private void blancoPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoPrecioKeyReleased
         if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
             blancoPrecio.setText(blancoPrecio.getText().replace("" + evt.getKeyChar(), ""));
         }
-        d.getBlanco().setPrecio(10045);       
+        precios.set(1, 10045);
     }//GEN-LAST:event_blancoPrecioKeyReleased
 
     private void blancoLimiteAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoLimiteAKeyReleased
         if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
             blancoLimiteA.setText(blancoLimiteA.getText().replace("" + evt.getKeyChar(), ""));
         }
-        d.getBlanco().setLimiteA(7);
+        limitesA.set(1, 5);
 
     }//GEN-LAST:event_blancoLimiteAKeyReleased
 
@@ -1121,7 +1146,7 @@ public class T2GUI extends javax.swing.JFrame {
                 blancoDescB.setText(blancoDescB.getText() + ".");
             }
         }
-        d.getBlanco().setDescB(1.15);
+        descsB.set(1, 15.0);
 
     }//GEN-LAST:event_blancoDescBKeyReleased
 
@@ -1129,7 +1154,7 @@ public class T2GUI extends javax.swing.JFrame {
         if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
             blancoLimiteB.setText(blancoLimiteB.getText().replace("" + evt.getKeyChar(), ""));
         }
-        d.getBlanco().setLimiteB(15);
+        limitesB.set(1, 10);
 
     }//GEN-LAST:event_blancoLimiteBKeyReleased
 
@@ -1142,7 +1167,7 @@ public class T2GUI extends javax.swing.JFrame {
                 blancoDescA.setText(blancoDescA.getText() + ".");
             }
         }
-        d.getBlanco().setDescA(1.07);
+        descsA.set(1, 7.0);
 
     }//GEN-LAST:event_blancoDescAKeyReleased
 
@@ -1151,55 +1176,55 @@ public class T2GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_pinkyPrecioActionPerformed
     private void modPinkyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modPinkyActionPerformed
         if (pinkyPrecio.getText().length() > 0) {
-            d.getPinky().setPrecio(Integer.parseInt(pinkyPrecio.getText()));
+            precios.set(0, Integer.parseInt(pinkyPrecio.getText()));
         }
         if (pinkyLimiteA.getText().length() > 0) {
-            d.getPinky().setLimiteA(Integer.parseInt(pinkyLimiteA.getText()));
+            limitesA.set(0, Integer.parseInt(pinkyLimiteA.getText()));
         }
         if (pinkyLimiteB.getText().length() > 0) {
-            d.getPinky().setLimiteB(Integer.parseInt(pinkyLimiteB.getText()));
+            limitesB.set(0, Integer.parseInt(pinkyLimiteB.getText()));
         }
         if (pinkyDescA.getText().length() > 0) {
-            d.getPinky().setDescA(Integer.parseInt(pinkyDescA.getText()));
+            descsA.set(0, Double.parseDouble(pinkyDescA.getText()));
         }
         if (pinkyDescB.getText().length() > 0) {
-            d.getPinky().setDescB(Integer.parseInt(pinkyDescB.getText()));
+            descsB.set(0, Double.parseDouble(pinkyDescB.getText()));
         }
     }//GEN-LAST:event_modPinkyActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (blancoPrecio.getText().length() > 0) {
-            d.getBlanco().setPrecio(Integer.parseInt(blancoPrecio.getText()));
+            precios.set(1, Integer.parseInt(blancoPrecio.getText()));
         }
         if (blancoLimiteA.getText().length() > 0) {
-            d.getBlanco().setLimiteA(Integer.parseInt(blancoLimiteA.getText()));
+            limitesA.set(1, Integer.parseInt(blancoLimiteA.getText()));
         }
         if (blancoLimiteB.getText().length() > 0) {
-            d.getBlanco().setLimiteB(Integer.parseInt(blancoLimiteB.getText()));
+            limitesB.set(1, Integer.parseInt(blancoLimiteB.getText()));
         }
         if (blancoDescA.getText().length() > 0) {
-            d.getBlanco().setDescA(Integer.parseInt(blancoDescA.getText()));
+            descsA.set(1, Double.parseDouble(blancoDescA.getText()));
         }
         if (blancoDescB.getText().length() > 0) {
-            d.getBlanco().setDescB(Integer.parseInt(blancoDescB.getText()));
+            descsB.set(1, Double.parseDouble(blancoDescB.getText()));
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if (jumboPrecio.getText().length() > 0) {
-            d.getJumbo().setPrecio(Integer.parseInt(jumboPrecio.getText()));
+            precios.set(2, Integer.parseInt(jumboPrecio.getText()));
         }
         if (jumboLimiteA.getText().length() > 0) {
-            d.getJumbo().setLimiteA(Integer.parseInt(jumboLimiteA.getText()));
+            limitesA.set(2, Integer.parseInt(jumboLimiteA.getText()));
         }
         if (jumboLimiteB.getText().length() > 0) {
-            d.getJumbo().setLimiteB(Integer.parseInt(jumboLimiteB.getText()));
+            limitesB.set(2, Integer.parseInt(jumboLimiteB.getText()));
         }
         if (jumboDescA.getText().length() > 0) {
-            d.getJumbo().setDescA(Integer.parseInt(jumboDescA.getText()));
+            descsA.set(2, Double.parseDouble(jumboDescA.getText()));
         }
         if (jumboDescB.getText().length() > 0) {
-            d.getJumbo().setDescB(Integer.parseInt(jumboDescB.getText()));
+            descsB.set(2, Double.parseDouble(jumboDescB.getText()));
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -1229,6 +1254,11 @@ public class T2GUI extends javax.swing.JFrame {
     private LinkedList<Cliente> listaClientes = new LinkedList<>();
     Cliente cliente;
     Descuentos d;
+    Vector<Integer> precios = new Vector<>();
+    Vector<Integer> limitesA = new Vector<>();
+    Vector<Integer> limitesB = new Vector<>();
+    Vector<Double> descsA = new Vector<>();
+    Vector<Double> descsB = new Vector<>();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField blancoDescA;
     private javax.swing.JTextField blancoDescB;

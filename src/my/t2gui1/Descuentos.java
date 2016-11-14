@@ -20,21 +20,42 @@ public class Descuentos {
     pinky.setPrecio(5840);
     pinky.setLimiteA(5);
     pinky.setLimiteB(10);
-    pinky.setDescA(1.05);
-    pinky.setDescB(1.1);
+    pinky.setDescA(5);
+    pinky.setDescB(10);
         
     blanco.setPrecio(10045);
     blanco.setLimiteA(7);
     blanco.setLimiteB(15);
-    blanco.setDescA(1.07);
-    blanco.setDescB(1.15);
+    blanco.setDescA(7);
+    blanco.setDescB(15);
         
     jumbo.setPrecio(23200);
     jumbo.setLimiteA(4);
     jumbo.setLimiteB(7);
-    jumbo.setDescA(1.04);
-    jumbo.setDescB(1.07);
-}        
+    jumbo.setDescA(4);
+    jumbo.setDescB(7);
+}     
+    public void setPinky(int p, int la, int lb, double da, double db){
+        pinky.setPrecio(p);
+        pinky.setLimiteA(la);
+        pinky.setLimiteB(lb);
+        pinky.setDescA(da);
+        pinky.setDescB(db);
+    }
+    public void setBlanco(int p, int la, int lb, double da, double db){
+        blanco.setPrecio(p);
+        blanco.setLimiteA(la);
+        blanco.setLimiteB(lb);
+        blanco.setDescA(da);
+        blanco.setDescB(db);
+    }
+    public void setJumbo(int p, int la, int lb, double da, double db){
+        jumbo.setPrecio(p);
+        jumbo.setLimiteA(la);
+        jumbo.setLimiteB(lb);
+        jumbo.setDescA(da);
+        jumbo.setDescB(db);
+    }
     public double descuento_pinky(double kilos)
     {
         preciopinky = kilos * pinky.getPrecio();
