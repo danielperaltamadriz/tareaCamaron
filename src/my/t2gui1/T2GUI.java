@@ -1,7 +1,25 @@
 package my.t2gui1;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class T2GUI extends javax.swing.JFrame {
 
@@ -14,7 +32,7 @@ public class T2GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         javax.swing.ButtonGroup btnGroup = new javax.swing.ButtonGroup();
-        jTabbedPane2 = new javax.swing.JTabbedPane();
+        tabControl = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -37,7 +55,6 @@ public class T2GUI extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jumboText = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         resultadoText = new javax.swing.JTextArea();
@@ -94,8 +111,19 @@ public class T2GUI extends javax.swing.JFrame {
         size = new javax.swing.JTextField();
         color = new javax.swing.JTextField();
         weight = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        clientesTable = new javax.swing.JTable();
+        cedulaBuscar = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        borrarDatos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         jPanel1.setName(""); // NOI18N
@@ -300,13 +328,6 @@ public class T2GUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton3.setText("Salir");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel3.setText("Registros de clientes al final del día");
 
@@ -338,7 +359,7 @@ public class T2GUI extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 288, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -347,9 +368,6 @@ public class T2GUI extends javax.swing.JFrame {
                 .addGap(375, 375, 375)
                 .addComponent(jLabel3)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(405, 405, 405)
                 .addComponent(registroBtn)
@@ -372,14 +390,18 @@ public class T2GUI extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(registroBtn)
                     .addComponent(limpiarBtn))
-                .addGap(34, 34, 34)
-                .addComponent(jButton3)
-                .addGap(16, 16, 16))
+                .addGap(75, 75, 75))
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("");
 
-        jTabbedPane2.addTab("tab1", jPanel4);
+        tabControl.addTab("Venta", jPanel4);
+
+        jPanel5.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jPanel5ComponentShown(evt);
+            }
+        });
 
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pnky", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         jPanel8.setName(""); // NOI18N
@@ -727,7 +749,7 @@ public class T2GUI extends javax.swing.JFrame {
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -740,7 +762,7 @@ public class T2GUI extends javax.swing.JFrame {
                 .addContainerGap(172, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("tab2", jPanel5);
+        tabControl.addTab("Cambio deprecios", jPanel5);
 
         btnGroup.add(pinkyHistoria);
         pinkyHistoria.setText("Camarón Pinky");
@@ -865,46 +887,94 @@ public class T2GUI extends javax.swing.JFrame {
                 .addGap(96, 96, 96))
         );
 
-        jTabbedPane2.addTab("tab4", jPanel7);
+        tabControl.addTab("Enciclopedia", jPanel7);
+
+        jPanel6.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jPanel6ComponentShown(evt);
+            }
+        });
+
+        clientesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(clientesTable);
+
+        cedulaBuscar.setToolTipText("Buscar por cédula");
+        cedulaBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cedulaBuscarKeyReleased(evt);
+            }
+        });
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel19.setText("Buscar:");
+
+        borrarDatos.setText("Borrar Datos");
+        borrarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                borrarDatosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(borrarDatos)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 940, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addGap(18, 18, 18)
+                        .addComponent(cedulaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(154, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cedulaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19))
+                .addGap(38, 38, 38)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(borrarDatos)
+                .addContainerGap(184, Short.MAX_VALUE))
+        );
+
+        tabControl.addTab("Clientes", jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jTabbedPane2)
+                .addComponent(tabControl)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(tabControl, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void calcularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularBtnActionPerformed
-        setVectores();
-        d = new Descuentos();
-        d.setPinky(precios.get(0), limitesA.get(0), limitesB.get(0), descsA.get(0), descsB.get(0));
-        d.setBlanco(precios.get(1), limitesA.get(1), limitesB.get(1), descsA.get(1), descsB.get(1));
-        d.setJumbo(precios.get(2), limitesA.get(2), limitesB.get(2), descsA.get(2), descsB.get(2));
-        d.descuento_pinky(Double.parseDouble(pinkyText.getText()));
-        d.descuento_blanco(Double.parseDouble(blancoText.getText()));
-        d.descuento_jumbo(Double.parseDouble(jumboText.getText()));
-        cliente = new Cliente(nombreText.getText(), cedulaText.getText(), d);
-        conDescuentoText.setText(String.valueOf(cliente.getCompra().getPrecioConDescuento()));
-        sinDescuentoText.setText(String.valueOf(cliente.getCompra().getPrecioSinDescuento()));
-        listaClientes.add(cliente);
-    }//GEN-LAST:event_calcularBtnActionPerformed
-
-    private void setVectores() {
+        
+    private static void setVectores() {
         if (precios.size() == 0) {
             precios.add(5840);
             precios.add(10045);
@@ -932,272 +1002,72 @@ public class T2GUI extends javax.swing.JFrame {
         }
     }
 
-    private void pinkyTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyTextKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            pinkyText.setText(pinkyText.getText().replace(evt.getKeyChar(), '\0'));
-        }
-    }//GEN-LAST:event_pinkyTextKeyReleased
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.out.println("Closing");
+        storeFile("precios", storePrecios());
+        storeFile("clientes", storeClientes());
+    }//GEN-LAST:event_formWindowClosing
 
-    private void nombreTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreTextKeyReleased
-        habilitandoBtn();
-    }//GEN-LAST:event_nombreTextKeyReleased
+    private void jPanel6ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel6ComponentShown
+        fillTable("");
+    }//GEN-LAST:event_jPanel6ComponentShown
 
-    private void cedulaTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cedulaTextKeyReleased
-        habilitandoBtn();
-    }//GEN-LAST:event_cedulaTextKeyReleased
-
-    private void blancoTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoTextKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            blancoText.setText(blancoText.getText().replace(evt.getKeyChar(), '\0'));
-        }
-    }//GEN-LAST:event_blancoTextKeyReleased
-
-    private void jumboTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboTextKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            jumboText.setText(jumboText.getText().replace(evt.getKeyChar(), '\0'));
-        }
-    }//GEN-LAST:event_jumboTextKeyReleased
-
-    private void registroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroBtnActionPerformed
-        String resultado = "";
-        for (int i = 0; i < listaClientes.size(); i++) {
-            resultado += "Cliente:" + listaClientes.get(i).getNombre();
-            resultado += " Cédula:" + listaClientes.get(i).getCedula();
-            resultado += " Pinky:" + listaClientes.get(i).getCompra().getPinky().getKilos();
-            resultado += " Blanco:" + listaClientes.get(i).getCompra().getBlanco().getKilos();
-            resultado += " Jumbo:" + listaClientes.get(i).getCompra().getJumbo().getKilos();
-            resultado += " Venta en Colones:" + listaClientes.get(i).getCompra().getPrecioConDescuento();
-            resultado += "\n";
-        }
-        resultadoText.setText(resultado);
-    }//GEN-LAST:event_registroBtnActionPerformed
-
-    private void limpiarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarBtnActionPerformed
-        limpiarEspacios();
-    }//GEN-LAST:event_limpiarBtnActionPerformed
-
-    private void blancoTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoTextKeyTyped
-        if (blancoText.getText().isEmpty()) {
-            blancoText.setText("0");
-        }
-
-    }//GEN-LAST:event_blancoTextKeyTyped
-
-    private void pinkyTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyTextKeyTyped
-        if (pinkyText.getText().isEmpty()) {
-            pinkyText.setText("0");
-        }
-
-    }//GEN-LAST:event_pinkyTextKeyTyped
-
-    private void jumboTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboTextKeyTyped
-        if (jumboText.getText().isEmpty()) {
-            jumboText.setText("0");
-        }
-    }//GEN-LAST:event_jumboTextKeyTyped
-
-    private void pinkyHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pinkyHistoriaActionPerformed
-        name.setText(d.getPinky().getName());
-        scientificName.setText(d.getPinky().getScientificName());
-        size.setText(d.getPinky().getSize());
-        color.setText(d.getPinky().getColor());
-        weight.setText(d.getPinky().getWeight());
-
-    }//GEN-LAST:event_pinkyHistoriaActionPerformed
-
-    private void blancoHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blancoHistoriaActionPerformed
-        name.setText(d.getBlanco().getName());
-        scientificName.setText(d.getBlanco().getScientificName());
-        size.setText(d.getBlanco().getSize());
-        color.setText(d.getBlanco().getColor());
-        weight.setText(d.getBlanco().getWeight());
-    }//GEN-LAST:event_blancoHistoriaActionPerformed
-
-    private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameActionPerformed
+    private void cedulaBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cedulaBuscarKeyReleased
+        fillTable(cedulaBuscar.getText());
+    }//GEN-LAST:event_cedulaBuscarKeyReleased
 
     private void colorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_colorActionPerformed
 
+    private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameActionPerformed
+
     private void jumboHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jumboHistoriaActionPerformed
-        name.setText(d.getJumbo().getName());
-        scientificName.setText(d.getJumbo().getScientificName());
-        size.setText(d.getJumbo().getSize());
-        color.setText(d.getJumbo().getColor());
-        weight.setText(d.getJumbo().getWeight());
+        name.setText(jumbo.getName());
+        scientificName.setText(jumbo.getScientificName());
+        size.setText(jumbo.getSize());
+        color.setText(jumbo.getColor());
+        weight.setText(jumbo.getWeight());
     }//GEN-LAST:event_jumboHistoriaActionPerformed
 
-    private void pinkyPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyPrecioKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            pinkyPrecio.setText(pinkyPrecio.getText().replace("" + evt.getKeyChar(), ""));
-        }
-      //  precios.set(0, 5840);
-    }//GEN-LAST:event_pinkyPrecioKeyReleased
+    private void blancoHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blancoHistoriaActionPerformed
+        name.setText(blanco.getName());
+        scientificName.setText(blanco.getScientificName());
+        size.setText(blanco.getSize());
+        color.setText(blanco.getColor());
+        weight.setText(blanco.getWeight());
+    }//GEN-LAST:event_blancoHistoriaActionPerformed
 
-    private void pinkyLimiteAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyLimiteAKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            pinkyLimiteA.setText(pinkyLimiteA.getText().replace("" + evt.getKeyChar(), ""));
-        }
-        
-      //  limitesA.set(0, 5);
-    }//GEN-LAST:event_pinkyLimiteAKeyReleased
+    private void pinkyHistoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pinkyHistoriaActionPerformed
+        name.setText(pinky.getName());
+        scientificName.setText(pinky.getScientificName());
+        size.setText(pinky.getSize());
+        color.setText(pinky.getColor());
+        weight.setText(pinky.getWeight());
+    }//GEN-LAST:event_pinkyHistoriaActionPerformed
 
-    private void pinkyDescBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyDescBKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            pinkyDescB.setText(pinkyDescB.getText().replace("" + evt.getKeyChar(), ""));
-        }
-        if (pinkyDescB.getText().length() - 1 < pinkyDescB.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
-            if (pinkyDescB.getText().replace(".", "").length() > 0) {
-                pinkyDescB.setText(pinkyDescB.getText() + ".");
-            }
-        }
-      //  descsB.set(0, 1.00);
-    }//GEN-LAST:event_pinkyDescBKeyReleased
-
-    private void pinkyLimiteBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyLimiteBKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            pinkyLimiteB.setText(pinkyLimiteB.getText().replace("" + evt.getKeyChar(), ""));
-        }
-      //  limitesA.set(0, 10);
-
-    }//GEN-LAST:event_pinkyLimiteBKeyReleased
-
-    private void pinkyDescAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyDescAKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            pinkyDescA.setText(pinkyDescA.getText().replace("" + evt.getKeyChar(), ""));
-        }
-        if (pinkyDescA.getText().length() - 1 < pinkyDescA.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
-            if (pinkyDescA.getText().replace(".", "").length() > 0) {
-                pinkyDescA.setText(pinkyDescA.getText() + ".");
-            }
-        }
-      //  descsA.set(0, 5.0);
-
-    }//GEN-LAST:event_pinkyDescAKeyReleased
-
-    private void jumboPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboPrecioKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            jumboPrecio.setText(jumboPrecio.getText().replace("" + evt.getKeyChar(), ""));
-        }
-     //   precios.set(2, 23200);
-    }//GEN-LAST:event_jumboPrecioKeyReleased
-
-    private void jumboLimiteAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboLimiteAKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            jumboLimiteA.setText(jumboLimiteA.getText().replace("" + evt.getKeyChar(), ""));
-        }
-      //  limitesA.set(2, 5);
-
-    }//GEN-LAST:event_jumboLimiteAKeyReleased
-
-    private void jumboDescBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboDescBKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            jumboDescB.setText(jumboDescB.getText().replace("" + evt.getKeyChar(), ""));
-        }
-        if (jumboDescB.getText().length() - 1 < jumboDescB.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
-            if (jumboDescB.getText().replace(".", "").length() > 0) {
-                jumboDescB.setText(jumboDescB.getText() + ".");
-            }
-        }
-    //    descsB.set(2, 7.0);
-    }//GEN-LAST:event_jumboDescBKeyReleased
-
-    private void jumboLimiteBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboLimiteBKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            jumboLimiteB.setText(jumboLimiteB.getText().replace("" + evt.getKeyChar(), ""));
-        }
-    //    limitesB.set(2, 10);
-
-    }//GEN-LAST:event_jumboLimiteBKeyReleased
-
-    private void jumboDescAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboDescAKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            jumboDescA.setText(jumboDescA.getText().replace("" + evt.getKeyChar(), ""));
-        }
-        if (jumboDescA.getText().length() - 1 < jumboDescA.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
-            if (jumboDescA.getText().replace(".", "").length() > 0) {
-                jumboDescA.setText(jumboDescA.getText() + ".");
-            }
-        }
-       // descsA.set(2, 4.0);
-    }//GEN-LAST:event_jumboDescAKeyReleased
-
-    private void blancoPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoPrecioKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            blancoPrecio.setText(blancoPrecio.getText().replace("" + evt.getKeyChar(), ""));
-        }
-     //   precios.set(1, 10045);
-    }//GEN-LAST:event_blancoPrecioKeyReleased
-
-    private void blancoLimiteAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoLimiteAKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            blancoLimiteA.setText(blancoLimiteA.getText().replace("" + evt.getKeyChar(), ""));
-        }
-      //  limitesA.set(1, 5);
-
-    }//GEN-LAST:event_blancoLimiteAKeyReleased
-
-    private void blancoDescBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoDescBKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            blancoDescB.setText(blancoDescB.getText().replace("" + evt.getKeyChar(), ""));
-        }
-        if (blancoDescB.getText().length() - 1 < blancoDescB.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
-            if (blancoDescB.getText().replace(".", "").length() > 0) {
-                blancoDescB.setText(blancoDescB.getText() + ".");
-            }
-        }
-      //  descsB.set(1, 15.0);
-
-    }//GEN-LAST:event_blancoDescBKeyReleased
-
-    private void blancoLimiteBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoLimiteBKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            blancoLimiteB.setText(blancoLimiteB.getText().replace("" + evt.getKeyChar(), ""));
-        }
-       // limitesB.set(1, 10);
-
-    }//GEN-LAST:event_blancoLimiteBKeyReleased
-
-    private void blancoDescAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoDescAKeyReleased
-        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
-            blancoDescA.setText(blancoDescA.getText().replace("" + evt.getKeyChar(), ""));
-        }
-        if (blancoDescA.getText().length() - 1 < blancoDescA.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
-            if (blancoDescA.getText().replace(".", "").length() > 0) {
-                blancoDescA.setText(blancoDescA.getText() + ".");
-            }
-        }
-        
-       // descsA.set(1, 7.0);
-
-    }//GEN-LAST:event_blancoDescAKeyReleased
-
-    private void pinkyPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pinkyPrecioActionPerformed
-
-    }//GEN-LAST:event_pinkyPrecioActionPerformed
-    private void modPinkyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modPinkyActionPerformed
-         setVectores();
-        if (pinkyPrecio.getText().length() > 0) {
-            precios.set(0, Integer.parseInt(pinkyPrecio.getText()));
-        }
-        if (pinkyLimiteA.getText().length() > 0) {
-            limitesA.set(0, Integer.parseInt(pinkyLimiteA.getText()));
-        }
-        if (pinkyLimiteB.getText().length() > 0) {
-            limitesB.set(0, Integer.parseInt(pinkyLimiteB.getText()));
-        }
-        if (pinkyDescA.getText().length() > 0) {
-            descsA.set(0, Double.parseDouble(pinkyDescA.getText()));
-        }
-        if (pinkyDescB.getText().length() > 0) {
-            descsB.set(0, Double.parseDouble(pinkyDescB.getText()));
-        }
-    }//GEN-LAST:event_modPinkyActionPerformed
+    private void jPanel5ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel5ComponentShown
+        pinkyPrecio.setText(String.valueOf(precios.get(0)));
+        blancoPrecio.setText(String.valueOf(precios.get(1)));
+        jumboPrecio.setText(String.valueOf(precios.get(2)));
+        pinkyLimiteA.setText(String.valueOf(limitesA.get(0)));
+        blancoLimiteA.setText(String.valueOf(limitesA.get(1)));
+        jumboLimiteA.setText(String.valueOf(limitesA.get(2)));
+        pinkyLimiteB.setText(String.valueOf(limitesB.get(0)));
+        blancoLimiteB.setText(String.valueOf(limitesB.get(1)));
+        jumboLimiteB.setText(String.valueOf(limitesB.get(2)));
+        pinkyDescA.setText(String.valueOf(descsA.get(0)));
+        blancoDescA.setText(String.valueOf(descsA.get(1)));
+        jumboDescA.setText(String.valueOf(descsA.get(2)));
+        pinkyDescB.setText(String.valueOf(descsB.get(0)));
+        blancoDescB.setText(String.valueOf(descsB.get(1)));
+        jumboDescB.setText(String.valueOf(descsB.get(2)));
+    }//GEN-LAST:event_jPanel5ComponentShown
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      setVectores();
+        setVectores();
         if (blancoPrecio.getText().length() > 0) {
             precios.set(1, Integer.parseInt(blancoPrecio.getText()));
         }
@@ -1215,8 +1085,48 @@ public class T2GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void blancoDescAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoDescAKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            blancoDescA.setText(blancoDescA.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        if (blancoDescA.getText().length() - 1 < blancoDescA.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
+            if (blancoDescA.getText().replace(".", "").length() > 0) {
+                blancoDescA.setText(blancoDescA.getText() + ".");
+            }
+        }
+    }//GEN-LAST:event_blancoDescAKeyReleased
+
+    private void blancoLimiteBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoLimiteBKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            blancoLimiteB.setText(blancoLimiteB.getText().replace("" + evt.getKeyChar(), ""));
+        }
+    }//GEN-LAST:event_blancoLimiteBKeyReleased
+
+    private void blancoDescBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoDescBKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            blancoDescB.setText(blancoDescB.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        if (blancoDescB.getText().length() - 1 < blancoDescB.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
+            if (blancoDescB.getText().replace(".", "").length() > 0) {
+                blancoDescB.setText(blancoDescB.getText() + ".");
+            }
+        }
+    }//GEN-LAST:event_blancoDescBKeyReleased
+
+    private void blancoLimiteAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoLimiteAKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            blancoLimiteA.setText(blancoLimiteA.getText().replace("" + evt.getKeyChar(), ""));
+        }
+    }//GEN-LAST:event_blancoLimiteAKeyReleased
+
+    private void blancoPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoPrecioKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            blancoPrecio.setText(blancoPrecio.getText().replace("" + evt.getKeyChar(), ""));
+        }
+    }//GEN-LAST:event_blancoPrecioKeyReleased
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-         setVectores();
+        setVectores();
         if (jumboPrecio.getText().length() > 0) {
             precios.set(2, Integer.parseInt(jumboPrecio.getText()));
         }
@@ -1234,6 +1144,237 @@ public class T2GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jumboDescAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboDescAKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            jumboDescA.setText(jumboDescA.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        if (jumboDescA.getText().length() - 1 < jumboDescA.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
+            if (jumboDescA.getText().replace(".", "").length() > 0) {
+                jumboDescA.setText(jumboDescA.getText() + ".");
+            }
+        }
+        // descsA.set(2, 4.0);
+    }//GEN-LAST:event_jumboDescAKeyReleased
+
+    private void jumboLimiteBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboLimiteBKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            jumboLimiteB.setText(jumboLimiteB.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        //    limitesB.set(2, 10);
+    }//GEN-LAST:event_jumboLimiteBKeyReleased
+
+    private void jumboDescBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboDescBKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            jumboDescB.setText(jumboDescB.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        if (jumboDescB.getText().length() - 1 < jumboDescB.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
+            if (jumboDescB.getText().replace(".", "").length() > 0) {
+                jumboDescB.setText(jumboDescB.getText() + ".");
+            }
+        }
+        //    descsB.set(2, 7.0);
+    }//GEN-LAST:event_jumboDescBKeyReleased
+
+    private void jumboLimiteAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboLimiteAKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            jumboLimiteA.setText(jumboLimiteA.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        //  limitesA.set(2, 5);
+    }//GEN-LAST:event_jumboLimiteAKeyReleased
+
+    private void jumboPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboPrecioKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            jumboPrecio.setText(jumboPrecio.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        //   precios.set(2, 23200);
+    }//GEN-LAST:event_jumboPrecioKeyReleased
+
+    private void modPinkyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modPinkyActionPerformed
+        setVectores();
+        if (pinkyPrecio.getText().length() > 0) {
+            precios.set(0, Integer.parseInt(pinkyPrecio.getText()));
+        }
+        if (pinkyLimiteA.getText().length() > 0) {
+            limitesA.set(0, Integer.parseInt(pinkyLimiteA.getText()));
+        }
+        if (pinkyLimiteB.getText().length() > 0) {
+            limitesB.set(0, Integer.parseInt(pinkyLimiteB.getText()));
+        }
+        if (pinkyDescA.getText().length() > 0) {
+            descsA.set(0, Double.parseDouble(pinkyDescA.getText()));
+        }
+        if (pinkyDescB.getText().length() > 0) {
+            descsB.set(0, Double.parseDouble(pinkyDescB.getText()));
+        }
+    }//GEN-LAST:event_modPinkyActionPerformed
+
+    private void pinkyDescAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyDescAKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            pinkyDescA.setText(pinkyDescA.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        if (pinkyDescA.getText().length() - 1 < pinkyDescA.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
+            if (pinkyDescA.getText().replace(".", "").length() > 0) {
+                pinkyDescA.setText(pinkyDescA.getText() + ".");
+            }
+        }
+        //  descsA.set(0, 5.0);
+    }//GEN-LAST:event_pinkyDescAKeyReleased
+
+    private void pinkyLimiteBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyLimiteBKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            pinkyLimiteB.setText(pinkyLimiteB.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        //  limitesA.set(0, 10);
+    }//GEN-LAST:event_pinkyLimiteBKeyReleased
+
+    private void pinkyDescBKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyDescBKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            pinkyDescB.setText(pinkyDescB.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        if (pinkyDescB.getText().length() - 1 < pinkyDescB.getText().replace(".", "").length() && evt.getKeyCode() == 46) {
+            if (pinkyDescB.getText().replace(".", "").length() > 0) {
+                pinkyDescB.setText(pinkyDescB.getText() + ".");
+            }
+        }
+        //  descsB.set(0, 1.00);
+    }//GEN-LAST:event_pinkyDescBKeyReleased
+
+    private void pinkyLimiteAKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyLimiteAKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            pinkyLimiteA.setText(pinkyLimiteA.getText().replace("" + evt.getKeyChar(), ""));
+        }
+
+        //  limitesA.set(0, 5);
+    }//GEN-LAST:event_pinkyLimiteAKeyReleased
+
+    private void pinkyPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyPrecioKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            pinkyPrecio.setText(pinkyPrecio.getText().replace("" + evt.getKeyChar(), ""));
+        }
+        //  precios.set(0, 5840);
+    }//GEN-LAST:event_pinkyPrecioKeyReleased
+
+    private void pinkyPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pinkyPrecioActionPerformed
+
+    }//GEN-LAST:event_pinkyPrecioActionPerformed
+
+    private void limpiarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarBtnActionPerformed
+        limpiarEspacios();
+    }//GEN-LAST:event_limpiarBtnActionPerformed
+
+    private void registroBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroBtnActionPerformed
+        String resultado = "";
+        for (int i = 0; i < listaClientes.size(); i++) {
+            resultado += "Cliente:" + listaClientes.get(i).getNombre();
+            resultado += " Cédula:" + listaClientes.get(i).getCedula();
+            resultado += " Pinky:" + listaClientes.get(i).getCompra().getPinky().getKilos();
+            resultado += " Blanco:" + listaClientes.get(i).getCompra().getBlanco().getKilos();
+            resultado += " Jumbo:" + listaClientes.get(i).getCompra().getJumbo().getKilos();
+            resultado += " Venta en Colones:" + listaClientes.get(i).getCompra().getPrecioConDescuento();
+            resultado += "\n";
+        }
+        resultadoText.setText(resultado);
+    }//GEN-LAST:event_registroBtnActionPerformed
+
+    private void jumboTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboTextKeyTyped
+        if (jumboText.getText().isEmpty()) {
+            jumboText.setText("0");
+        }
+    }//GEN-LAST:event_jumboTextKeyTyped
+
+    private void jumboTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jumboTextKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            jumboText.setText(jumboText.getText().replace(evt.getKeyChar(), '\0'));
+        }
+    }//GEN-LAST:event_jumboTextKeyReleased
+
+    private void blancoTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoTextKeyTyped
+        if (blancoText.getText().isEmpty()) {
+            blancoText.setText("0");
+        }
+    }//GEN-LAST:event_blancoTextKeyTyped
+
+    private void blancoTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_blancoTextKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            blancoText.setText(blancoText.getText().replace(evt.getKeyChar(), '\0'));
+        }
+    }//GEN-LAST:event_blancoTextKeyReleased
+
+    private void pinkyTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyTextKeyTyped
+        if (pinkyText.getText().isEmpty()) {
+            pinkyText.setText("0");
+        }
+    }//GEN-LAST:event_pinkyTextKeyTyped
+
+    private void pinkyTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pinkyTextKeyReleased
+        if (evt.getKeyCode() < 48 || evt.getKeyCode() > 57) {
+            pinkyText.setText(pinkyText.getText().replace(evt.getKeyChar(), '\0'));
+        }
+    }//GEN-LAST:event_pinkyTextKeyReleased
+
+    private void calcularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularBtnActionPerformed
+        setVectores();
+        d = new Descuentos();
+        d.setPinky(precios.get(0), limitesA.get(0), limitesB.get(0), descsA.get(0), descsB.get(0));
+        d.setBlanco(precios.get(1), limitesA.get(1), limitesB.get(1), descsA.get(1), descsB.get(1));
+        d.setJumbo(precios.get(2), limitesA.get(2), limitesB.get(2), descsA.get(2), descsB.get(2));
+        d.descuento_pinky(Double.parseDouble(pinkyText.getText()));
+        d.descuento_blanco(Double.parseDouble(blancoText.getText()));
+        d.descuento_jumbo(Double.parseDouble(jumboText.getText()));
+        cliente = new Cliente(nombreText.getText(), cedulaText.getText(), d);
+        conDescuentoText.setText(String.valueOf(cliente.getCompra().getPrecioConDescuento()));
+        sinDescuentoText.setText(String.valueOf(cliente.getCompra().getPrecioSinDescuento()));
+        listaClientes.add(cliente);
+        LinkedList<String> value = new LinkedList();
+        if (clientes.containsKey(cliente.getCedula())) {
+            value = clientes.get(cliente.getCedula());
+            value.set(0, String.valueOf(Double.parseDouble(value.get(0)) + d.getPinky().getKilos()));
+            value.set(1, String.valueOf(Double.parseDouble(value.get(1)) + d.getBlanco().getKilos()));
+            value.set(2, String.valueOf(Double.parseDouble(value.get(2)) + d.getJumbo().getKilos()));
+            value.set(3, String.valueOf(Double.parseDouble(value.get(3)) + d.getPrecioConDescuento()));
+            clientes.remove(cliente.getCedula());
+        }
+        else{
+            value.add(String.valueOf(d.getPinky().getKilos()));
+            value.add(String.valueOf(d.getBlanco().getKilos()));
+            value.add(String.valueOf(d.getJumbo().getKilos()));
+            value.add(String.valueOf(d.getPrecioConDescuento()));
+        }
+        clientes.put(cliente.getCedula(),value);
+    }//GEN-LAST:event_calcularBtnActionPerformed
+
+    private void cedulaTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cedulaTextKeyReleased
+        habilitandoBtn();
+    }//GEN-LAST:event_cedulaTextKeyReleased
+
+    private void nombreTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreTextKeyReleased
+        habilitandoBtn();
+    }//GEN-LAST:event_nombreTextKeyReleased
+
+    private void borrarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarDatosActionPerformed
+       int respuesta =  JOptionPane.showConfirmDialog(this, "¿Desea borrar los datos de TODOS los clientes?", "Desea Borrar?", 0);
+       
+       if(respuesta == JOptionPane.YES_OPTION){
+           clientes = new HashMap();
+       }
+       fillTable("");
+       
+    }//GEN-LAST:event_borrarDatosActionPerformed
+
+    private void fillTable(String ced){
+        DefaultTableModel  model = new DefaultTableModel (columnNames, 0);
+        LinkedList<String[]> values = new LinkedList();
+       for(Map.Entry<String, LinkedList<String>> pair: clientes.entrySet()){
+           if(pair.getKey().contains(ced)){
+               String[] array = {pair.getKey(), pair.getValue().get(0), 
+                   pair.getValue().get(1), pair.getValue().get(2), 
+                   pair.getValue().get(3)};
+               model.addRow(array);
+           }
+       }        
+       clientesTable.setModel(model);
+    }
+    
     private void limpiarEspacios() {
         nombreText.setText("");
         cedulaText.setText("");
@@ -1248,23 +1389,137 @@ public class T2GUI extends javax.swing.JFrame {
         calcularBtn.setEnabled(!nombreText.getText().isEmpty() && !cedulaText.getText().isEmpty());
         boolean enabled = (!pinkyText.getText().isEmpty() || !blancoText.getText().isEmpty() || !jumboText.getText().isEmpty());
         calcularBtn.setEnabled(calcularBtn.isEnabled() && enabled);
+
     }
+
+    private static LinkedList loadFile(String name) {
+        try (BufferedReader br = new BufferedReader(new FileReader(name + ".txt"))) {
+            String linea;
+            LinkedList<String[]> result = new LinkedList();
+            while ((linea = br.readLine()) != null) {
+                String[] valores = linea.split(";");
+                result.add(valores);
+            }
+            System.out.println(name + ".txt leídoo");
+            return result;
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al cargar el archivo de nombre: " + name + "\n" + e.getMessage());
+            return null;
+        }
+    }
+
+    private static void storeFile(String name, LinkedList<String[]> list) {
+        FileWriter writer = null;
+        try {
+            File file = new File(name+".txt");            
+            writer = new FileWriter(file, false);
+            for(String[] values: list){
+                for(String s: values){
+                    writer.write(s+";");
+                }
+                writer.write("\n");
+            }            
+            writer.close();
+            System.out.println("Archivo guardado: "+name+".txt");
+        } catch (IOException ex) {
+            
+        } 
+    }
+
+    private static void loadClientes(LinkedList<String[]> list) {
+        if (list != null) {
+            for (String[] line : list) {
+                LinkedList<String> values = new LinkedList();
+                values.add(line[1]);
+                values.add(line[2]);
+                values.add(line[3]);
+                values.add(line[4]);
+                clientes.put(line[0], values);
+            }
+        }
+        System.out.println("Se leyeron los clientes");
+    }
+    
+    private static LinkedList storeClientes() {
+        LinkedList<String[]> result = new LinkedList();
+            for(Map.Entry<String, LinkedList<String>> pair: clientes.entrySet()){
+                String[] values = {pair.getKey(), 
+                                   pair.getValue().get(0),
+                                   pair.getValue().get(1),
+                                   pair.getValue().get(2),
+                                   pair.getValue().get(3)};                                    
+                result.add(values);
+            }
+        return result;
+    }
+
+    private static void loadPrecios(LinkedList<String[]> list) {
+        int i = 0;
+        if (list != null) {
+            for (String[] line : list) {
+                precios.set(i, Integer.parseInt(line[0]));
+                limitesA.set(i, Integer.parseInt(line[1]));
+                limitesB.set(i, Integer.parseInt(line[2]));
+                descsA.set(i, Double.parseDouble(line[3]));
+                descsB.set(i, Double.parseDouble(line[4]));
+                i++;
+            }
+        }
+        System.out.println("Se leyeron los precios");
+    }
+
+    private static LinkedList storePrecios() {
+        LinkedList<String[]> result = new LinkedList();
+        for (int i = 0; i < 3; i++) {
+            String[] values = {String.valueOf(precios.get(i)),
+                String.valueOf(limitesA.get(i)),
+                String.valueOf(limitesB.get(i)),
+                String.valueOf(descsA.get(i)),
+                String.valueOf(descsB.get(i))};
+            result.add(values);
+        }
+        return result;
+    }    
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new T2GUI().setVisible(true);              
+                new T2GUI().setVisible(true);
+                loadLists();
+                loadClientes(loadFile("clientes"));
+                loadPrecios(loadFile("precios"));
             }
         });
     }
+
+    private static void loadLists() {
+        clientes = new HashMap();
+        precios = new ArrayList<>(3);
+        limitesA = new ArrayList<>(3);
+        limitesB = new ArrayList<>(3);
+        descsA = new ArrayList<>(3);
+        descsB = new ArrayList<>(3);        
+        setVectores();
+    }
+
+    private static void loadArray(ArrayList array, int size) {
+        for (int i = 0; i < size; i++) {
+            array.add(0);
+        }
+    }
+    private static final String[] columnNames = {"Cédula Jurídica", "Pinky Kilos", "Blanco Kilos", "Jumbo Kilos", "Total"};
+    private static HashMap<String, LinkedList<String>> clientes;
     private LinkedList<Cliente> listaClientes = new LinkedList<>();
     Cliente cliente;
+    Pinky pinky = new Pinky();
+    Blanco blanco = new Blanco();
+    Jumbo jumbo = new Jumbo();
     Descuentos d;
-    Vector<Integer> precios = new Vector<>();    
-    Vector<Integer> limitesA = new Vector<>();
-    Vector<Integer> limitesB = new Vector<>();
-    Vector<Double> descsA = new Vector<>();
-    Vector<Double> descsB = new Vector<>();
+    static ArrayList<Integer> precios;
+    static ArrayList<Integer> limitesA;
+    static ArrayList<Integer> limitesB;
+    static ArrayList<Double> descsA;
+    static ArrayList<Double> descsB;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField blancoDescA;
     private javax.swing.JTextField blancoDescB;
@@ -1273,12 +1528,14 @@ public class T2GUI extends javax.swing.JFrame {
     private javax.swing.JTextField blancoLimiteB;
     private javax.swing.JTextField blancoPrecio;
     private javax.swing.JTextField blancoText;
+    private javax.swing.JButton borrarDatos;
     private javax.swing.JButton calcularBtn;
+    private javax.swing.JTextField cedulaBuscar;
     private javax.swing.JTextField cedulaText;
+    private javax.swing.JTable clientesTable;
     private javax.swing.JTextField color;
     private javax.swing.JTextField conDescuentoText;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1290,6 +1547,7 @@ public class T2GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -1318,10 +1576,11 @@ public class T2GUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jumboDescA;
     private javax.swing.JTextField jumboDescB;
     private javax.swing.JRadioButton jumboHistoria;
@@ -1345,6 +1604,7 @@ public class T2GUI extends javax.swing.JFrame {
     private javax.swing.JTextField scientificName;
     private javax.swing.JTextField sinDescuentoText;
     private javax.swing.JTextField size;
+    private javax.swing.JTabbedPane tabControl;
     private javax.swing.JTextField weight;
     // End of variables declaration//GEN-END:variables
 }
